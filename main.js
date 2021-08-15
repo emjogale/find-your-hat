@@ -5,6 +5,7 @@ const hole = "O";
 const fieldCharacter = "░";
 const pathCharacter = "*";
 let playing = true;
+let numberOfHoles;
 
 // the field class will set up the game according to the users input and then
 // start the game functionality
@@ -29,7 +30,7 @@ class Field {
 			}
 			fieldArea.push(col);
 		}
-		const numberOfHoles = Math.round((rows * columns * percentage) / 100);
+		numberOfHoles = Math.round((rows * columns * percent) / 100);
 
 		return fieldArea;
 	}
@@ -52,6 +53,10 @@ class Field {
 		}
 	}
 
+	printNumberOfHoles() {
+		console.log(`There needs to be ${numberOfHoles} in this game`);
+	}
+
 	//TODO give the user some instructions
 
 	// start the game
@@ -60,11 +65,13 @@ class Field {
 		while (playing) {
 			this.printField();
 			this.getDirection();
+			this.printNumberOfHoles();
 		}
 	}
-
+	// TODO get the user input on direction
 	getDirection() {}
 
+	// TODO check if the move keeps it in the playing field
 	outOfBoundsCheck() {}
 }
 
@@ -78,3 +85,4 @@ console.log(myField.printField());
 console.log(
 	`Great - lets make a field which has ${myRows} rows and ${myColumns} columns with ${percentage}% holes`
 );
+console.log(myField.printNumberOfHoles());
