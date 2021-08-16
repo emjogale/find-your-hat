@@ -47,12 +47,18 @@ class Field {
 		let numberOfHoles = Math.floor((rows * columns * percentage) / 100);
 		console.log(`there will be ${numberOfHoles} holes`);
 		// a function to replace field characters randomly with the correct no. of holes
+		// and checking that they don't cover the hat or the starting position
 		while (numberOfHoles > 0) {
 			let holeSpot = {
 				x: Math.floor(Math.random() * rows),
 				y: Math.floor(Math.random() * columns),
 			};
-			while (fieldArea[holeSpot.x][holeSpot.y] === hole) {
+			while (
+				(holeSpot.x === 0 && holeSpot.y === 0) ||
+				fieldArea[holeSpot.x][holeSpot.y] === hole ||
+				fieldArea[holeSpot.x][holeSpot.y] === hat ||
+				fieldArea[holeSpot.x === 0]
+			) {
 				holeSpot.x = Math.floor(Math.random() * rows);
 				holeSpot.y = Math.floor(Math.random() * columns);
 			}
