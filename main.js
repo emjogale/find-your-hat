@@ -6,8 +6,8 @@ const fieldCharacter = "░";
 const pathCharacter = "*";
 let playing = true;
 
-// the field class will set up the game according to the users input and then
-// start the game functionality
+// the field class will set up the game according to the users input
+// and then start the game functionality
 class Field {
 	constructor(rows, columns, percentage) {
 		this.field = Field.generateField(rows, columns, percentage);
@@ -21,7 +21,6 @@ class Field {
 
 	// generates a blank field with the number of rows and columns the user has requested
 	static generateField(rows, columns, percentage) {
-		console.log(`the percentage inputted is ${percentage}`);
 		let fieldArea = [];
 		let percent = percentage / 100;
 		for (let i = 0; i < rows; i++) {
@@ -31,7 +30,7 @@ class Field {
 			}
 			fieldArea.push(col);
 		}
-		// a function to select a random spot for the hat
+		// select a random spot for the hat
 		const hatSpot = {
 			x: Math.floor(Math.random() * columns),
 			y: Math.floor(Math.random() * rows),
@@ -45,9 +44,8 @@ class Field {
 
 		// work out number of holes required
 		let numberOfHoles = Math.floor((rows * columns * percentage) / 100);
-		console.log(`there will be ${numberOfHoles} holes`);
-		// a function to replace field characters randomly with the correct no. of holes
-		// and checking that they don't cover the hat or the starting position
+		// replace field characters randomly with the correct no. of holes
+		// and check that they don't cover the hat or the starting position
 		while (numberOfHoles > 0) {
 			let holeSpot = {
 				x: Math.floor(Math.random() * rows),
@@ -68,15 +66,8 @@ class Field {
 
 		return fieldArea;
 	}
-
-	//TODO now add in holes / hat and users starting position
-
-	//TODO set the hat position
-	//TODO now change the users requested % of these to holes
-
 	// print the field so the user can interact with it
 	printField() {
-		console.log("here we are trying to print the field");
 		const fieldString = this.field.map((row) => {
 			return row.join("");
 		});
@@ -85,7 +76,30 @@ class Field {
 	}
 
 	//TODO give the user some instructions
-
+	getDirection() {
+		console.log("now we have to ask for directions");
+		let direction = prompt(
+			"Would you like to go up(u), down(d), left(l) or right(r) ?"
+		).toUpperCase();
+		switch (direction) {
+			case "U":
+				this.locationY -= 1;
+				break;
+			case "D":
+				this.locationY += 1;
+				break;
+			case "L":
+				this.locationX -= 1;
+				break;
+			case "R":
+				this.locationX += 1;
+				break;
+			default:
+				console.log("Enter U, D, L or R.");
+				this.direction();
+				break;
+		}
+	}
 	// start the game
 	play() {
 		let playing = true;
@@ -94,8 +108,6 @@ class Field {
 			this.getDirection();
 		}
 	}
-	// TODO get the user input on direction
-	getDirection() {}
 
 	// TODO check if the move keeps it in the playing field
 	outOfBoundsCheck() {}
@@ -107,9 +119,11 @@ let myColumns = prompt("How many columns do you want?: ");
 let myPercentage = prompt("What percent of holes?(suggest between 10-20): ");
 
 const myField = new Field(myRows, myColumns, myPercentage);
-console.log(myField.printField());
+
 console.log(
 	`Great - lets make a field which has ${myRows} rows and ${myColumns} columns and ${Math.floor(
 		(myRows * myRows * myPercentage) / 100
 	)} holes`
 );
+
+myField.play();
